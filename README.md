@@ -3,7 +3,7 @@
 
 This Java program will be made for a fake ATM system. This ATM will be allowed to look at checking, savings, and CD accounts. You can also make deposits and withdraw. The program is for program excises based on Data Structure/algorithm and can be used for other technology and software. (if needed for a similar project). This is just practice with also of rule of creating this ATM banking.
 
-#Rule
+## Rule
 
 You can withdraw and deposit anytime on a checking account. 
 Saving account you can (we explain after).
@@ -13,7 +13,7 @@ If you want to write a check or send a check, the check can not be 6 months old 
 
 If your account has a sufficient amount, a fee will be taken out of the account when withdrawing or depositing. 
 
-#Data Structure/Algorithms
+## Data Structure/Algorithms
 
 Linear search,
 Bubbble sort,
