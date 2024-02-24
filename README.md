@@ -11,7 +11,8 @@ If you want to write a check or send a check, the check can not be 6 months old 
 
 If your account has a sufficient amount, a fee will be taken out of the account when withdrawing or depositing. 
 
-#Data Structure/Algorithms 
+#Data Structure/Algorithms
+
 Linear search,
 Bubbble sort,
 Binary Search,
