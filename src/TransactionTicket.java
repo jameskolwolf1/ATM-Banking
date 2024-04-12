@@ -60,12 +60,18 @@ public class TransactionTicket {
 
     @Override
     public String toString() {
-        return "TransactionTicket{" +
-                "dateOfTransaction='" + dateOfTransaction + '\'' +
-                ", typeOfTransaction='" + typeOfTransaction + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", amountOfTransaction='" + amountOfTransaction + '\'' +
-                ", termOfCD=" + termOfCD +
-                '}';
+
+
+        String returningTicket =
+        "Todays Date: " + dateOfTransaction + "\n"+
+        "Type Of Transaction: " + typeOfTransaction + "\n" + 
+        "Account Number: " + accountNumber + "\n" +
+        "Transaction Amount: " + amountOfTransaction + "\n";
+
+        if(termOfCD != 0){
+            returningTicket = returningTicket + "CD Term: " + termOfCD;
+        }
+
+        return returningTicket;        
     }
 }

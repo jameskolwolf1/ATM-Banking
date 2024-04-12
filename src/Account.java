@@ -1,15 +1,20 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Account {
 
-    private Depositor depositor = null;
-    private String accountNumber = "";
-    private String accountType = "";
+    private Depositor depositor;
+    private String accountNumber;
+    private String accountType;
     private boolean accountStatus = true;
-    private String accountBalance = "";
-    private String cdDate = "";
+    private String accountBalance;
+    private String cdDate;
     private ArrayList<TransactionReceipt> transactionReceipts = new ArrayList<TransactionReceipt>();
 
     public Account(Depositor depositor, String accountNumber, String accountType,
@@ -45,13 +50,6 @@ public class Account {
 
     public TransactionReceipt getBalance(TransactionTicket transactionTicket){
 
-        Calendar calendar = Calendar.getInstance();
-
-
-        transactionTicket.setTypeOfTransaction("Balance");
-        transactionTicket.setAmountOfTransaction(getAccountBalance());
-        transactionTicket.setAccountNumber(getAccountNumber());
-        transactionTicket.setDateOfTransaction(calendar.toString());
 
         if(!isAccountStatus()){
 
@@ -61,7 +59,6 @@ public class Account {
 
             getTransactionReceipts().add(transactionReceipt);
             transactionReceipts.toString();
-
             return transactionReceipt;
 
         }
@@ -71,7 +68,7 @@ public class Account {
                     null, null, getAccountBalance(),getCdDate());
             
             getTransactionReceipts().add(transactionReceipt);
-            transactionReceipts.toString();
+            System.out.println(transactionReceipt.toString());
             return transactionReceipt;
         }
 
@@ -79,7 +76,10 @@ public class Account {
                 null, null,getAccountBalance(),null);
 
         getTransactionReceipts().add(transactionReceipt);
-        transactionReceipts.toString();
+        System.out.println("Hello3");
+
+        System.out.println(transactionReceipts.toString());
+    
         return transactionReceipt;
     }
     public TransactionReceipt makeDeposit(TransactionTicket transactionTicket, String amount, int newDate){
@@ -89,10 +89,14 @@ public class Account {
         double newAmount = convAmount + convBalance;
         Calendar calendar = Calendar.getInstance();
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+        Date date = new Date();  
+        String dateTrans = formatter.format(date); 
+
         transactionTicket.setTypeOfTransaction("Deposit");
         transactionTicket.setAmountOfTransaction(amount);
         transactionTicket.setAccountNumber(getAccountNumber());
-        transactionTicket.setDateOfTransaction(calendar.toString());
+        transactionTicket.setDateOfTransaction(dateTrans);
 
         if(!isAccountStatus()){
 
@@ -101,6 +105,7 @@ public class Account {
                     null);
 
             getTransactionReceipts().add(transactionReceipt);
+            System.out.println(transactionReceipt.toString());
 
             return transactionReceipt;
 
@@ -138,6 +143,7 @@ public class Account {
                 setAccountBalance(Double.toString(newAmount));
 
                 getTransactionReceipts().add(transactionReceipt);
+                System.out.println(transactionReceipt.toString());
                 return transactionReceipt;
             }
 
@@ -145,14 +151,18 @@ public class Account {
                     "Maturity Date has not pass", null, getAccountBalance(),getCdDate());
 
             getTransactionReceipts().add(transactionReceipt);
+            System.out.println(transactionReceipt.toString());
             return transactionReceipt;
         }
 
-        setAccountBalance(Double.toString(newAmount));
+        
         TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket,true,
                 null, getAccountBalance(),Double.toString(newAmount),null);
 
+        setAccountBalance(Double.toString(newAmount));
+
         getTransactionReceipts().add(transactionReceipt);
+        System.out.println(transactionReceipt.toString());
         return transactionReceipt;
     }
     public TransactionReceipt makeWithdrawal(TransactionTicket transactionTicket, String amount, int newDate){
@@ -161,11 +171,14 @@ public class Account {
         double convBalance = Double.parseDouble(getAccountBalance());
 
         Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+        Date date = new Date();  
+        String dateTrans = formatter.format(date); 
 
         transactionTicket.setTypeOfTransaction("Withdraw");
         transactionTicket.setAmountOfTransaction(amount);
         transactionTicket.setAccountNumber(getAccountNumber());
-        transactionTicket.setDateOfTransaction(calendar.toString());
+        transactionTicket.setDateOfTransaction(dateTrans);
 
         if(!isAccountStatus()){
 
@@ -174,6 +187,7 @@ public class Account {
                     null);
 
             getTransactionReceipts().add(transactionReceipt);
+            System.out.println(transactionReceipt.toString());
 
             return transactionReceipt;
 
@@ -214,11 +228,16 @@ public class Account {
                     setAccountBalance(Double.toString(newAmount));
 
                     getTransactionReceipts().add(transactionReceipt);
+                    System.out.println(transactionReceipt.toString());
                     return transactionReceipt;
                 }
 
                 TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket, false,
                         "Low Balance ", getAccountBalance(), null, null);
+                
+                getTransactionReceipts().add(transactionReceipt);
+                System.out.println(transactionReceipt.toString());
+
                 return transactionReceipt;
             }
 
@@ -227,6 +246,7 @@ public class Account {
                     "Maturity Date has not pass", null, getAccountBalance(),getCdDate());
 
             getTransactionReceipts().add(transactionReceipt);
+            System.out.println(transactionReceipt.toString());
             return transactionReceipt;
         }
 
@@ -234,11 +254,14 @@ public class Account {
         if (convBalance - convAmount >= 0) {
 
 
-            setAccountBalance(Double.toString(newAmount));
+            
             TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket, true,
                     null, getAccountBalance(), Double.toString(newAmount), null);
 
+            setAccountBalance(Double.toString(newAmount));
+
             getTransactionReceipts().add(transactionReceipt);
+            System.out.println(transactionReceipt.toString());
             return transactionReceipt;
         }
 
@@ -246,65 +269,61 @@ public class Account {
                 "Low Balance", null, getAccountBalance(), null);
 
         getTransactionReceipts().add(transactionReceipt);
+        System.out.println(transactionReceipt.toString());
+
         return transactionReceipt;
     }
     public TransactionReceipt clearCheck(TransactionTicket transactionTicket, String amount, String accountNum,
-                                         String dateCheck){
+                                         String dateCheck) throws ParseException{
 
         if(getAccountType().equals("Checking")) {
 
-            String[] dateCheckSlit = dateCheck.split("/");
-            Calendar dateChackCal = Calendar.getInstance();
-            dateChackCal.set(Calendar.MONTH, Integer.parseInt(dateCheckSlit[0]));
-            dateChackCal.set(Calendar.DATE, Integer.parseInt(dateCheckSlit[1]));
-            dateChackCal.set(Calendar.YEAR, Integer.parseInt(dateCheckSlit[2]));
-            dateChackCal.set(Calendar.HOUR, 0);
-            dateChackCal.set(Calendar.MINUTE, 0);
-            dateChackCal.set(Calendar.SECOND, 0);
-            dateChackCal.set(Calendar.MILLISECOND, 0);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm/dd/yyyy");
+            Date date1 = simpleDateFormat.parse(dateCheck);
+            Calendar calDate1 = Calendar.getInstance();
+            calDate1.setTime(date1);
 
             Calendar today = Calendar.getInstance();
-            Calendar today1 = today;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");  
+            LocalDateTime now = LocalDateTime.now();
 
             transactionTicket.setTypeOfTransaction("Clear Check");
             transactionTicket.setAmountOfTransaction(amount);
             transactionTicket.setAccountNumber(getAccountNumber());
-            transactionTicket.setDateOfTransaction(today.toString());
+            transactionTicket.setDateOfTransaction(dtf.format(now));
 
             today.set(Calendar.HOUR, 0);
             today.set(Calendar.MINUTE, 0);
             today.set(Calendar.SECOND, 0);
             today.set(Calendar.MILLISECOND, 0);
 
-            Calendar dateChackCalPlus = dateChackCal;
-            dateChackCalPlus.add(Calendar.MONTH, 6);
+            Calendar dateChackCalPlus = calDate1;
+            dateChackCalPlus.add(Calendar.MONTH, 6);  
 
-            Bank bank = new Bank(); //breaking will happening
-            Account account = bank.getAcct(accountNum);
-
-            if (dateChackCal.equals(today) || (dateChackCal.after(today) && today.before(dateChackCalPlus)) ||
+            if (calDate1.equals(today) || (calDate1.after(today) && today.before(dateChackCalPlus)) ||
                     today.equals(dateChackCalPlus)) {
 
                 double amountNum = Double.parseDouble(amount);
                 double accountAmount = Double.parseDouble(getAccountBalance());
-                double withdrawFromAccount = Double.parseDouble(account.getAccountBalance());
+                double withdrawFromAccount = Double.parseDouble(getAccountBalance());
 
-                if (withdrawFromAccount >= amountNum) {
+                if (withdrawFromAccount > amountNum) {
 
                     double newBalance = accountAmount + amountNum;
                     String newBalanceString = Double.toString(newBalance);
                     TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket, true,
-                            null, getAccountBalance(), newBalanceString, today1.toString());
+                            null, getAccountBalance(), newBalanceString, dtf.format(now));
                     setAccountBalance(newBalanceString);
                     getTransactionReceipts().add(transactionReceipt);
 
                     //Might have to double check this logic
-                    account.makeWithdrawal(transactionTicket, amount, 0);
+                    System.out.println(transactionReceipt.toString());
+                    return transactionReceipt;
                 }
 
 
                 TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket, false,
-                        "Check Bounce", null, getAccountBalance(), today1.toString());
+                        "Check Bounce", null, getAccountBalance(), dtf.format(now));
 
                 getTransactionReceipts().add(transactionReceipt);
 
@@ -313,17 +332,21 @@ public class Account {
                 String newBlanaceString = Double.toString(newBalance);
 
                 TransactionReceipt transactionReceipt1 = new TransactionReceipt(transactionTicket, false,
-                        "Check Bounce",
-                        getAccountBalance(), newBlanaceString,today1.toString());
-                account.makeWithdrawal(transactionTicket,"2.50",0);
+                        "Check Bounce",getAccountBalance(), newBlanaceString,dtf.format(now));
+
+                makeWithdrawal(transactionTicket,"2.50",0);
+
+                System.out.println(transactionReceipt.toString());
+                return transactionReceipt;
 
             }
 
             TransactionReceipt transactionReceipt = new TransactionReceipt(transactionTicket, false,
-                    "Old Check", null,
-                    getAccountBalance(), today1.toString());
+                    "Old Check", null, getAccountBalance(), dtf.format(now));
             getTransactionReceipts().add(transactionReceipt);
 
+            System.out.println(transactionReceipt.toString());
+              return transactionReceipt;
         }
 
         System.out.println("Not a checking Account");
@@ -426,14 +449,65 @@ public class Account {
     }
     @Override
     public String toString() {
-        return "Account{" +
-                "depositor=" + depositor +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", accountStatus=" + accountStatus +
-                ", accountBalance='" + accountBalance + '\'' +
-                ", cdDate='" + cdDate + '\'' +
-                ", transactionReceipts=" + transactionReceipts +
-                '}';
+
+        String info = "Account Information\n";
+        info = info + depositor.toString();
+        info = info + "Account Number: " + accountNumber + "\n";
+        info = info + "Account Type: " + accountType + "\n";
+        
+        if(accountStatus == true){
+
+            info = info + "Account Status: Open \n";
+        } else {
+
+            info = info + "Account Status: Closed \n";
+        }
+
+        info = info + "Account Balance: " + accountBalance + "\n";
+        
+        if(cdDate != null){
+
+            info = info + "CD Date: " + cdDate + "\n";
+        }
+
+        info = info + "\n Transaction History\n";
+        info = info + "--------------------------------\n";
+        
+        if(getTransactionReceipts().isEmpty()){
+
+            info = info + "Currently No Transcation has been \n made on this account yet";
+
+            return info;
+        }
+        for(int i = getTransactionReceipts().size() - 1; i >= 0; i--){
+
+            info = info + getTransactionReceipts().get(i) + "\n";
+        }
+
+        return info;
+    }
+    public String accountInfo(){
+
+        String info = "Account Information\n";
+        info = info + depositor.toString();
+        info = info + "Account Number: " + accountNumber + "\n";
+        info = info + "Account Type: " + accountType + "\n";
+        
+        if(accountStatus == true){
+
+            info = info + "Account Status: Open \n";
+        } else {
+
+            info = info + "Account Status: Closed \n";
+        }
+
+        info = info + "Account Balance: " + accountBalance + "\n";
+        
+        if(cdDate != null){
+
+            info = info + "CD Date: " + cdDate + "\n";
+        }
+
+        return info;
     }
 }

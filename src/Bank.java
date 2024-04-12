@@ -4,10 +4,14 @@ import java.util.Scanner;
 public class Bank {
 
     private static ArrayList<String>account = new ArrayList<>();
-    private static ArrayList<String> copyAccount = getAccount();
+    private static ArrayList<String> copyAccount = account;
+    private static ArrayList<String>accNumsSortKey = new ArrayList<>();
+    private static ArrayList<String>ssnSortKey = new ArrayList<>();
+    private static ArrayList<String>nameSortKey = new ArrayList<>();
+
     public Bank(){}
 
-    // LATER
+// LATER
 //    public TransactionReceipt openNewAcct(TransactionTicket transactionTicket){}
 //    public TransactionReceipt deleteAcct(TransactionTicket transactionTicket){}
 
@@ -25,7 +29,6 @@ public class Bank {
         }
         return -1;
     }
-
     public void readData(Scanner read){
 
         while (read.hasNextLine()){
@@ -38,7 +41,7 @@ public class Bank {
 
         Account account = new Account();
         String data = getAccount().get(findAcct(accountNumber));
-        System.out.println(data);
+        //System.out.println(data);
         String [] dataslip = data.split(" ");
 
         Name name = new Name();
@@ -65,9 +68,54 @@ public class Bank {
         account.setAccountBalance(dataslip[5]);
         return account; 
     }
+    public boolean checkingSSNAndAccountNum(String ssn, String accounttype){
+
+        for(String looking : getCopyAccount()){
+
+            String [] dataslip = looking.split(" ");
+            if(dataslip[2].equals(ssn) && dataslip[4].equals(accounttype)){
+
+                return true;
+            }
+        }
+        return false;
+    }
     public int getNumAccts(){
 
+
         return getCopyAccount().size();
+    }
+    public void sortbyAccountNum_QuickSort(ArrayList<String>data, int lowIndex, int highIndex){
+
+        if(lowIndex < highIndex){
+
+            int pivot = QiuckSort(data,lowIndex,highIndex);
+
+            sortbyAccountNum_QuickSort(data, lowIndex, pivot - 1);
+            sortbyAccountNum_QuickSort(data, pivot + 1, highIndex);
+        }
+
+    }
+    public int QiuckSort(ArrayList<String>data, int lowIndex, int highIndex){
+
+        String line = data.get(highIndex);
+        String [] lineSlip = line.split(" ");
+        String pivot = lineSlip[3];
+        int i = lowIndex - 1;
+
+        for(int k = i; k < highIndex; k++){
+
+            String data1 = data.get(k);
+            String [] data1Slip = data1.split(" ");
+            String comparing = data1Slip[3];
+
+            if(comparing.compareTo(pivot) == 1){
+                k++;
+
+                String temp
+            }
+        }
+
     }
     public static String totalAmountInSavingsAccts(){
 
@@ -127,16 +175,37 @@ public class Bank {
         }
         return Double.toString(amount);
     }
-    public static ArrayList<String> getAccount() {
+    public ArrayList<String> getAccount() {
         return account;
     }
-    public static void setAccount(ArrayList<String> account) {
+    public void setAccount(ArrayList<String> account) {
         Bank.account = account;
     }
-    public static ArrayList<String> getCopyAccount() {
+    public ArrayList<String> getCopyAccount() {
         return copyAccount;
     }
-    public static void setCopyAccount(ArrayList<String> copyAccount) {
+    public void setCopyAccount(ArrayList<String> copyAccount) {
         Bank.copyAccount = copyAccount;
+    }
+
+    public ArrayList<Integer> getAccNumsSortKey() {
+        return accNumsSortKey;
+    }
+    public void setAccNumsSortKey(ArrayList<Integer> accNumsSortKey) {
+        Bank.accNumsSortKey = accNumsSortKey;
+    }
+    public  ArrayList<Integer> getSsnSortKey() {
+        return ssnSortKey;
+    }
+    public void setSsnSortKey(ArrayList<Integer> ssnSortKey) {
+        Bank.ssnSortKey = ssnSortKey;
+    }
+
+    public ArrayList<Integer> getNameSortKey() {
+        return nameSortKey;
+    }
+
+    public static void setNameSortKey(ArrayList<Integer> nameSortKey) {
+        Bank.nameSortKey = nameSortKey;
     }
 }

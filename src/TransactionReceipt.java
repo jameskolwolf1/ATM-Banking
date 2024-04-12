@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 public class TransactionReceipt {
 
@@ -71,17 +70,38 @@ public class TransactionReceipt {
 
     @Override
     public String toString() {
-        return "TransactionReceipt{" +
-                "transactionTicket=" + transactionTicket.getDateOfTransaction() + " " + 
-                transactionTicket.getTypeOfTransaction() + " " +
-                transactionTicket.getAccountNumber() + " " +
-                transactionTicket.getAmountOfTransaction() + " " +
-                transactionTicket.getTermOfCD() + " " +
-                ", successIndicatorFlag=" + successIndicatorFlag + 
-                ", reasonForFailure='" + reasonForFailure + '\'' +
-                ", preTransactionBalance='" + preTransactionBalance + '\'' +
-                ", postTransactionBalance='" + postTransactionBalance + '\'' +
-                ", postTransactionMaturityDate='" + postTransactionMaturityDate + '\'' +
-                '}';
+
+        String transRecipt = "Transcation Receipt\n";
+
+        if(successIndicatorFlag == true){
+
+            transRecipt = transRecipt + "Transcation: Complete \n";
+            transRecipt = transRecipt + transactionTicket.toString() + "\n";
+
+            if(preTransactionBalance != (null)){
+
+                transRecipt = transRecipt + "PreTransaction Balance: " + preTransactionBalance + "\n";
+            }
+            
+            
+            transRecipt = transRecipt + "ProTransaction Balance: " + postTransactionBalance + "\n";
+
+            if(postTransactionMaturityDate != (null)){
+
+                transRecipt = transRecipt + "Post Transaction Maturity Date: " + postTransactionMaturityDate;
+            }
+
+
+        }
+
+        if(successIndicatorFlag == false){
+
+            transRecipt = transRecipt + "Transcation: Failed \n";
+            transRecipt = transRecipt + "Reason For Failure: " + reasonForFailure + "\n";
+
+            
+        }
+
+        return transRecipt;
     }
 }

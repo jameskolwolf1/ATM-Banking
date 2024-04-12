@@ -43,9 +43,9 @@ public class Depositor {
 
     @Override
     public String toString() {
-        return "Depositor{" +
-                "name=" + name +
-                ", socialSecurity='" + socialSecurity + '\'' +
-                '}';
+
+        String info = name.toString() + "\n";
+        info = info + "Social Security: " + getSocialSecurity();
+        return info;
     }
 }
