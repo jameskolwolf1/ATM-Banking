@@ -16,10 +16,10 @@ public class Main {
         Bank bank = new Bank();
         readAccts(bank);
         Scanner sc = new Scanner(System.in);
-        PrintWriter printWriter = new PrintWriter("receipt.txt");
+        PrintWriter printWriter = new PrintWriter("data.txt");
         Boolean isOff = false;
       
-    //   while(isOff == false){
+       while(isOff == false){
 
         menu();
         String chose = sc.next();
@@ -57,9 +57,10 @@ public class Main {
             case "q":
                 isOff = true;
                 break;
-            default:;
+            default:
+                System.out.println("Thank you, Have a Nice Day");
         }
-    //   }
+       }
     }
 
     public static void readAccts(Bank bank) throws FileNotFoundException{
