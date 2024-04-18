@@ -16,7 +16,7 @@ public class Main {
         Bank bank = new Bank();
         readAccts(bank);
         Scanner sc = new Scanner(System.in);
-        PrintWriter printWriter = new PrintWriter("data.txt");
+        PrintWriter printWriter = new PrintWriter("result.txt");
         Boolean isOff = false;
       
        while(isOff == false){
@@ -67,6 +67,26 @@ public class Main {
 
       Scanner sc = new Scanner(new File("data.txt"));
       bank.readData(sc);
+//      while(sc.hasNextLine()){
+//
+//          String data = sc.nextLine();
+//          String [] dataSlip = data.split(" ");
+//          Name name = new Name(dataSlip[0], dataSlip[1]);
+//          Depositor depositor = new Depositor(name, dataSlip[2]);
+//          String accountNum = dataSlip[3];
+//          boolean openFlag = true;
+//          String typeOfAccount = dataSlip[4];
+//          Account account = new Account();
+//
+//          if(typeOfAccount == "CD"){
+//
+//              String balance = dataSlip[5];
+//              String date = dataSlip[6];
+//          }
+//
+//          String balance = dataSlip[5];
+//          bank.getDataBase().add(data);
+//      }
     }
     public static void menu(){
 
@@ -245,7 +265,12 @@ public class Main {
 
                 addToDatabase.trim();
 
-                bank.getCopyAccount().add(addToDatabase);
+                Name name = new Name(newCustFirstName, newCustLastName);
+                Depositor depositor = new Depositor(name, newCustSocialNum);
+                Account account = new Account(depositor,accountNum,checking,Double.toString(amount),
+                        null, true);
+
+                bank.getCopyAccountt().add(account);
                 transactionTicket = new TransactionTicket();
                 transactionReceipt = new TransactionReceipt();
 
@@ -285,7 +310,12 @@ public class Main {
 
                 addToDatabase.trim();
 
-                bank.getCopyAccount().add(addToDatabase);
+                name = new Name(newCustFirstName, newCustLastName);
+                depositor = new Depositor(name, newCustSocialNum);
+                account = new Account(depositor,accountNum,savings,Double.toString(amount),
+                        null, true);
+
+                bank.getCopyAccountt().add(account);
 
                 transactionTicket = new TransactionTicket();
                 transactionReceipt = new TransactionReceipt();
@@ -348,7 +378,12 @@ public class Main {
 
                 addToDatabase.trim();
 
-                bank.getCopyAccount().add(addToDatabase);
+                name = new Name(newCustFirstName, newCustLastName);
+                depositor = new Depositor(name, newCustSocialNum);
+                account = new Account(depositor,accountNum,cd,Double.toString(amount),
+                        matuirtyDate.toString(), true);
+
+                bank.getCopyAccountt().add(account);
 
                 transactionTicket = new TransactionTicket();
                 transactionReceipt = new TransactionReceipt();
@@ -440,9 +475,9 @@ public class Main {
         System.out.println("|     First Name     |     Last Name     |     SSN     |     Account Number     |" +
                 "     Account Type     |     Balance     |     Maturity Date     |");
 
-        for(int i = 0; i < bank.getCopyAccount().size(); i++){
+        for(int i = 0; i < bank.getCopyAccountt().size(); i++){
 
-            System.out.println(bank.getCopyAccount().get(i));
+            System.out.println(bank.getCopyAccountt().get(i));
         }
     }
 

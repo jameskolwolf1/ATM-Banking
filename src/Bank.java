@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class Bank {
 
-    private static ArrayList<String>account = new ArrayList<>();
-    private static ArrayList<String> copyAccount = account;
+    private static ArrayList<Account>dataBase = new ArrayList<>();
+    private static ArrayList<Account> copyDatabase = dataBase;
     private static ArrayList<String>accNumsSortKey = new ArrayList<>();
     private static ArrayList<String>ssnSortKey = new ArrayList<>();
     private static ArrayList<String>nameSortKey = new ArrayList<>();
@@ -17,16 +17,21 @@ public class Bank {
 
     public int findAcct(String accountNumber){
 
-    for(int i =0; i <= getAccount().size(); i++){
+    for(int i = 0; i < getCopyAccountt().size(); i++) {
 
-            String data = getCopyAccount().get(i);
-            String [] dataslip = data.split(" ");
+//            String data = getDataBase().get(i);
+//            String [] dataslip = data.split(" ");
+//
+//            if(dataslip[3].equals(accountNumber)){
+//
+//                return i;
+//            }
+        Account account = getCopyAccountt().get(i);
+        if (account.getAccountNumber().equals(accountNumber)) {
 
-            if(dataslip[3].equals(accountNumber)){
-
-                return i;
-            }
+            return i;
         }
+    }
         return -1;
     }
     public void readData(Scanner read){
@@ -34,46 +39,65 @@ public class Bank {
         while (read.hasNextLine()){
 
             String data = read.nextLine();
-            account.add(data);
+            String [] slipData = data.split(" ");
+            Name name = new Name(slipData[0], slipData[1]);
+            Depositor depositor = new Depositor(name, slipData[2]);
+            String accountNum = slipData[3];
+            String accountType = slipData[4];
+            Account account;
+
+            if(accountType.equals("CD")){
+
+                String balance = slipData[5];
+                String cdTerm = slipData[6];
+                account = new Account(depositor,accountNum,accountType,balance,cdTerm, true);
+                getDataBase().add(account);
+            }
+
+            String balance = slipData[5];
+            account = new Account(depositor, accountNum, accountType,balance,null, true);
+            getDataBase().add(account);
+
         }
+
+
     }
     public Account getAcct(String accountNumber){
 
-        Account account = new Account();
-        String data = getAccount().get(findAcct(accountNumber));
-        //System.out.println(data);
-        String [] dataslip = data.split(" ");
-
-        Name name = new Name();
-        name.setFirstName(dataslip[0]);
-        name.setLastName(dataslip[1]);
-        
-        Depositor depositor = new Depositor();
-        depositor.setName(name);
-        depositor.setSocialSecurity(dataslip[2]);
-
-        if(getCopyAccount().size() == 6){
-          
-            account.setDepositor(depositor);
-            account.setAccountNumber(dataslip[3]);
-            account.setAccountType(dataslip[4]);
-            account.setAccountBalance(dataslip[5]);
-            return account;
-
-        }
-        
-        account.setDepositor(depositor);
-        account.setAccountNumber(dataslip[3]);
-        account.setAccountType(dataslip[4]);
-        account.setAccountBalance(dataslip[5]);
+        Account account;
+        account = getCopyAccountt().get(findAcct(accountNumber));
+//        //System.out.println(data);
+//        String [] dataslip = data.split(" ");
+//
+//        Name name = new Name();
+//        name.setFirstName(dataslip[0]);
+//        name.setLastName(dataslip[1]);
+//
+//        Depositor depositor = new Depositor();
+//        depositor.setName(name);
+//        depositor.setSocialSecurity(dataslip[2]);
+//
+//        if(getCopyAccountt().size() == 6){
+//
+//            account.setDepositor(depositor);
+//            account.setAccountNumber(dataslip[3]);
+//            account.setAccountType(dataslip[4]);
+//            account.setAccountBalance(dataslip[5]);
+//            return account;
+//
+//        }
+//
+//        account.setDepositor(depositor);
+//        account.setAccountNumber(dataslip[3]);
+//        account.setAccountType(dataslip[4]);
+//        account.setAccountBalance(dataslip[5]);
         return account; 
     }
     public boolean checkingSSNAndAccountNum(String ssn, String accounttype){
 
-        for(String looking : getCopyAccount()){
+        for(Account account : getCopyAccountt()){
 
-            String [] dataslip = looking.split(" ");
-            if(dataslip[2].equals(ssn) && dataslip[4].equals(accounttype)){
+            if(account.getDepositor().getSocialSecurity() == ssn && account.getAccountType() == accounttype){
 
                 return true;
             }
@@ -83,7 +107,7 @@ public class Bank {
     public int getNumAccts(){
 
 
-        return getCopyAccount().size();
+        return getCopyAccountt().size();
     }
 //    public void sortbyAccountNum_QuickSort(ArrayList<String>data, int lowIndex, int highIndex){
 //
@@ -120,13 +144,13 @@ public class Bank {
     public static String totalAmountInSavingsAccts(){
 
         double amount = 0.0;
-        for(int i = 0; 0 < copyAccount.size(); i++){
+        for(int i = 0; 0 < copyDatabase.size(); i++){
 
-            String data = copyAccount.get(i);
-            String [] dataSlip = data.split(" ");
-            if(dataSlip[4].equals("Savings")){
+            Account account = copyDatabase.get(i);
 
-                amount = amount + Double.parseDouble(dataSlip[5]);
+            if(account.getAccountType().equals("Savings")){
+
+                amount = amount + Double.parseDouble(account.getAccountBalance());
             }
         }
 
@@ -135,13 +159,13 @@ public class Bank {
     public static String totalAmountInCheckingAccts(){
 
         double amount = 0;
-        for(int i = 0; 0 < copyAccount.size(); i++){
+        for(int i = 0; 0 < copyDatabase.size(); i++){
 
-            String data = copyAccount.get(i);
-            String [] dataSlip = data.split(" ");
-            if(dataSlip[4].equals("Checking")){
+            Account account = copyDatabase.get(i);
 
-                amount = amount + Double.parseDouble(dataSlip[5]);
+            if(account.getAccountType().equals("Checking")){
+
+                amount = amount + Double.parseDouble(account.getAccountBalance());
             }
         }
 
@@ -150,13 +174,13 @@ public class Bank {
     public static String totalAmountInCDAccts(){
 
         double amount = 0.0;
-        for(int i = 0; 0 < copyAccount.size(); i++){
+        for(int i = 0; 0 < copyDatabase.size(); i++){
 
-            String data = copyAccount.get(i);
-            String [] dataSlip = data.split(" ");
-            if(dataSlip[4].equals("CD")){
+            Account account = copyDatabase.get(i);
 
-                amount = amount + Double.parseDouble(dataSlip[5]);
+            if(account.getAccountType().equals("CD")){
+
+                amount = amount + Double.parseDouble(account.getAccountBalance());
             }
         }
 
@@ -165,27 +189,26 @@ public class Bank {
     public static String totalAmountInAllAccts(){
 
         double amount = 0.0;
-        for(int i = 0; 0 < copyAccount.size(); i++){
+        for(int i = 0; 0 < copyDatabase.size(); i++){
 
-            String data = copyAccount.get(i);
-            String [] dataSlip = data.split(" ");
+            Account account = copyDatabase.get(i);
 
-            amount = amount + Double.parseDouble(dataSlip[5]);
+            amount = amount + Double.parseDouble(account.getAccountBalance());
 
         }
         return Double.toString(amount);
     }
-    public ArrayList<String> getAccount() {
-        return account;
+    public ArrayList<Account> getDataBase() {
+        return dataBase;
     }
-    public void setAccount(ArrayList<String> account) {
-        Bank.account = account;
+    public void setAccount(ArrayList<Account> dataBase) {
+        Bank.dataBase = dataBase;
     }
-    public ArrayList<String> getCopyAccount() {
-        return copyAccount;
+    public ArrayList<Account> getCopyAccountt() {
+        return copyDatabase;
     }
-    public void setCopyAccount(ArrayList<String> copyAccount) {
-        Bank.copyAccount = copyAccount;
+    public void setCopyAccount(ArrayList<Account> copyDatabase) {
+        Bank.copyDatabase = copyDatabase;
     }
 
 //    public ArrayList<Integer> getAccNumsSortKey() {

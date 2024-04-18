@@ -18,7 +18,7 @@ public class Account {
     private ArrayList<TransactionReceipt> transactionReceipts = new ArrayList<TransactionReceipt>();
 
     public Account(Depositor depositor, String accountNumber, String accountType,
-                   String accountBalance, String cdDate) {
+                   String accountBalance, String cdDate, boolean accountStatus) {
         this.depositor = depositor;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
