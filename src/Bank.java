@@ -19,13 +19,6 @@ public class Bank {
 
     for(int i = 0; i < getCopyAccountt().size(); i++) {
 
-//            String data = getDataBase().get(i);
-//            String [] dataslip = data.split(" ");
-//
-//            if(dataslip[3].equals(accountNumber)){
-//
-//                return i;
-//            }
         Account account = getCopyAccountt().get(i);
         if (account.getAccountNumber().equals(accountNumber)) {
 
@@ -66,31 +59,6 @@ public class Bank {
 
         Account account;
         account = getCopyAccountt().get(findAcct(accountNumber));
-//        //System.out.println(data);
-//        String [] dataslip = data.split(" ");
-//
-//        Name name = new Name();
-//        name.setFirstName(dataslip[0]);
-//        name.setLastName(dataslip[1]);
-//
-//        Depositor depositor = new Depositor();
-//        depositor.setName(name);
-//        depositor.setSocialSecurity(dataslip[2]);
-//
-//        if(getCopyAccountt().size() == 6){
-//
-//            account.setDepositor(depositor);
-//            account.setAccountNumber(dataslip[3]);
-//            account.setAccountType(dataslip[4]);
-//            account.setAccountBalance(dataslip[5]);
-//            return account;
-//
-//        }
-//
-//        account.setDepositor(depositor);
-//        account.setAccountNumber(dataslip[3]);
-//        account.setAccountType(dataslip[4]);
-//        account.setAccountBalance(dataslip[5]);
         return account; 
     }
     public boolean checkingSSNAndAccountNum(String ssn, String accounttype){

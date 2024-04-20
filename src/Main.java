@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.logging.SimpleFormatter;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException, ParseException {
+    public static void main(String[] args) throws FileNotFoundException, ParseException, InvalidMenuSelectionException {
 
 
         Bank bank = new Bank();
@@ -58,7 +58,7 @@ public class Main {
                 isOff = true;
                 break;
             default:
-                System.out.println("Thank you, Have a Nice Day");
+                throw  new InvalidMenuSelectionException(chose);
         }
        }
     }
@@ -67,26 +67,7 @@ public class Main {
 
       Scanner sc = new Scanner(new File("data.txt"));
       bank.readData(sc);
-//      while(sc.hasNextLine()){
-//
-//          String data = sc.nextLine();
-//          String [] dataSlip = data.split(" ");
-//          Name name = new Name(dataSlip[0], dataSlip[1]);
-//          Depositor depositor = new Depositor(name, dataSlip[2]);
-//          String accountNum = dataSlip[3];
-//          boolean openFlag = true;
-//          String typeOfAccount = dataSlip[4];
-//          Account account = new Account();
-//
-//          if(typeOfAccount == "CD"){
-//
-//              String balance = dataSlip[5];
-//              String date = dataSlip[6];
-//          }
-//
-//          String balance = dataSlip[5];
-//          bank.getDataBase().add(data);
-//      }
+
     }
     public static void menu(){
 
