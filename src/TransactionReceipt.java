@@ -75,7 +75,7 @@ public class TransactionReceipt {
 
         if(successIndicatorFlag == true){
 
-            transRecipt = transRecipt + "Transcation: Complete \n";
+            transRecipt = transRecipt + "Transaction: Complete \n";
             transRecipt = transRecipt + transactionTicket.toString() + "\n";
 
             if(preTransactionBalance != (null)){
@@ -96,8 +96,11 @@ public class TransactionReceipt {
 
         if(successIndicatorFlag == false){
 
-            transRecipt = transRecipt + "Transcation: Failed \n";
+            transRecipt = transRecipt + "Transaction: Failed \n";
             transRecipt = transRecipt + "Reason For Failure: " + reasonForFailure + "\n";
+            transRecipt = transRecipt + transactionTicket.toString() + "\n";
+            transRecipt = transRecipt + "ProTransaction Balance: " + postTransactionBalance + "\n";
+
 
             
         }

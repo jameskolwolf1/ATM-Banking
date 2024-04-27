@@ -59,6 +59,7 @@ public class Main {
                 break;
             default:
                 throw  new InvalidMenuSelectionException(chose);
+
         }
        }
     }
@@ -180,8 +181,10 @@ public class Main {
         String accountNum = sc.next();
 
         Account account = bank.getAcct(accountNum);
-
-        System.out.println(account.accountInfo());
+        TransactionTicket transactionTicket = new TransactionTicket();
+        System.out.println("What is your SSN");
+        String ssn = sc.next();
+        account.accountInfo(transactionTicket, ssn);
     }
     public static void accountInoWithHistory(Bank bank, PrintWriter outFile, Scanner inFile){
 

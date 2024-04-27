@@ -44,8 +44,8 @@ public class Depositor {
     @Override
     public String toString() {
 
-        String info = name.toString() + "\n";
-        info = info + "Social Security: " + getSocialSecurity();
+        String info = name.toString();
+        info =  "\n"+ info + "Social Security: " + getSocialSecurity();
         return info;
     }
 }
